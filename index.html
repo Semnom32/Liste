@@ -75,6 +75,105 @@
             pointer-events: all;
         }
 
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb-item {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb-item:hover {
+            color: #000;
+        }
+
+        .breadcrumb-separator {
+            color: #ccc;
+        }
+
+        /* Import/Export Section */
+        .data-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .export-btn, .import-btn {
+            padding: 10px 20px;
+            background: #666;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .export-btn:hover, .import-btn:hover {
+            background: #333;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .import-file {
+            display: none;
+        }
+
+        .import-label {
+            padding: 10px 20px;
+            background: #666;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            display: inline-block;
+        }
+
+        .import-label:hover {
+            background: #333;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .status-message {
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .status-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
         /* Groups Page */
         .add-group {
             display: flex;
@@ -91,9 +190,27 @@
             outline: none;
             transition: all 0.3s ease;
             transform: translateY(0);
+            resize: vertical;
+            min-height: 48px;
         }
 
-        .add-group input:focus, .add-task input:focus {
+        .add-group textarea, .add-task textarea {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            resize: vertical;
+            min-height: 48px;
+            max-height: 120px;
+            font-family: inherit;
+        }
+
+        .add-group input:focus, .add-task input:focus,
+        .add-group textarea:focus, .add-task textarea:focus {
             border-color: #000;
             transform: translateY(-1px);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -109,12 +226,32 @@
             font-size: 16px;
             transition: all 0.3s ease;
             transform: translateY(0);
+            height: fit-content;
         }
 
         .add-btn:hover {
             background: #333;
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-subgroup-btn {
+            padding: 8px 16px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            margin-left: 8px;
+        }
+
+        .add-subgroup-btn:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
         }
 
         .groups-grid {
@@ -139,15 +276,46 @@
             transform: translateY(-2px);
         }
 
+        .group-card.subgroup {
+            border-left: 4px solid #007bff;
+            margin-left: 20px;
+        }
+
         .group-name {
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .group-stats {
             font-size: 14px;
             color: #666;
+            margin-bottom: 12px;
+        }
+
+        .group-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .group-actions button {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #666;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .group-actions button:hover {
+            background: #f8f9fa;
+            border-color: #000;
+            color: #000;
         }
 
         .delete-group, .delete-task {
@@ -177,6 +345,8 @@
             font-size: 24px;
             font-weight: 500;
             margin-bottom: 8px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .add-task {
@@ -191,7 +361,7 @@
 
         .task-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             padding: 16px 0;
             border-bottom: 1px solid #f0f0f0;
             transition: all 0.3s ease;
@@ -215,13 +385,18 @@
             width: 18px;
             height: 18px;
             margin-right: 16px;
+            margin-top: 2px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .task-text {
             flex: 1;
             font-size: 16px;
             text-decoration: none;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         .task-item.completed .task-text {
@@ -242,6 +417,8 @@
 
         .delete-task {
             font-size: 16px;
+            margin-left: 8px;
+            flex-shrink: 0;
         }
 
         .progress-section {
@@ -268,7 +445,7 @@
 
         .progress-text {
             font-size: 14px;
-            color: #666;
+            color: #000;
         }
 
         .empty-state {
@@ -276,6 +453,39 @@
             color: #999;
             padding: 60px 20px;
             font-size: 16px;
+        }
+
+        .subgroup-indicator {
+            display: inline-block;
+            margin-right: 8px;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Estilos para o toggle entre tarefa e subgrupo */
+        .toggle-btn {
+            padding: 10px 20px;
+            background: #fff;
+            color: #000;
+            border: 1px solid #000;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            flex: 1;
+        }
+
+        .toggle-btn:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+        }
+
+        .toggle-btn.active {
+            background: #000;
+            color: #fff;
         }
 
         @media (max-width: 600px) {
@@ -294,20 +504,42 @@
             h1 {
                 font-size: 24px;
             }
+
+            .data-controls {
+                flex-direction: column;
+            }
+
+            .group-card.subgroup {
+                margin-left: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Status Message -->
+        <div id="statusMessage" class="status-message"></div>
+
         <!-- Groups Page -->
         <div id="groupsPage" class="page active">
             <div class="header">
                 <h1>Meus Grupos</h1>
             </div>
+
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb" id="breadcrumb"></div>
+
+            <!-- Import/Export Controls -->
+            <div class="data-controls">
+                <button class="export-btn" onclick="exportData()">📥 Exportar Dados</button>
+                <label for="importFile" class="import-label">📤 Importar Dados</label>
+                <input type="file" id="importFile" class="import-file" accept=".json" onchange="importData(event)">
+            </div>
             
             <div class="add-group">
-                <input type="text" id="newGroupName" placeholder="Nome do novo grupo..." maxlength="50">
+                <textarea id="newGroupName" placeholder="Nome do novo grupo..." rows="1"></textarea>
                 <button class="add-btn" onclick="addGroup()">Criar Grupo</button>
+                <button class="add-subgroup-btn" onclick="addSubgroup()" id="addSubgroupBtn" style="display: none;">+ Subgrupo</button>
             </div>
 
             <div class="groups-grid" id="groupsGrid">
@@ -326,10 +558,10 @@
             </div>
 
             <div class="group-header">
-                <div class="add-task">
-                    <input type="text" id="newTaskText" placeholder="Nova tarefa..." maxlength="100">
-                    <button class="add-btn" onclick="addTask()">Adicionar</button>
-                </div>
+                <!-- Toggle entre tarefa e subgrupo -->
+                <div id="addToggleContainer"></div>
+
+                <div id="addFormContainer"></div>
             </div>
 
             <ul class="tasks-list" id="tasksList">
@@ -351,67 +583,456 @@
     <script>
         let groups = [];
         let currentGroupId = null;
+        let currentParentId = null;
+        let navigationStack = [];
         let groupIdCounter = 0;
         let taskIdCounter = 0;
+
+        // Toggle entre tarefa e subgrupo
+        let addMode = 'task'; // 'task' ou 'subgroup'
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-resize functionality for textareas
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    autoResizeTextarea(this);
+                });
+
+                // Allow Enter key to submit
+                textarea.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        if (this.id === 'newGroupName') {
+                            addGroup();
+                        } else if (this.id === 'newTaskText') {
+                            addTask();
+                        }
+                    }
+                });
+            });
+
+            // Load data and render
+            loadFromLocalStorage();
+            renderGroups();
+        });
+
+        // Storage Functions (usando localStorage para persistência)
+        function saveToLocalStorage() {
+            try {
+                const data = {
+                    groups: groups,
+                    groupIdCounter: groupIdCounter,
+                    taskIdCounter: taskIdCounter,
+                    version: "1.1"
+                };
+                localStorage.setItem('simpleChecklistData', JSON.stringify(data));
+            } catch (error) {
+                console.error('Erro ao salvar dados:', error);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const dataStr = localStorage.getItem('simpleChecklistData');
+                if (dataStr) {
+                    const data = JSON.parse(dataStr);
+                    groups = data.groups || [];
+                    groupIdCounter = data.groupIdCounter || 0;
+                    taskIdCounter = data.taskIdCounter || 0;
+                    return true;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+            }
+            return false;
+        }
+
+        // Auto-resize textareas
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Import/Export Functions
+        function exportData() {
+            try {
+                const dataToExport = {
+                    groups: groups,
+                    groupIdCounter: groupIdCounter,
+                    taskIdCounter: taskIdCounter,
+                    exportDate: new Date().toISOString(),
+                    version: "1.1"
+                };
+
+                const dataStr = JSON.stringify(dataToExport, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `checklist-backup-${new Date().toISOString().split('T')[0]}.json`;
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showStatusMessage('Dados exportados com sucesso!', 'success');
+            } catch (error) {
+                console.error('Erro ao exportar dados:', error);
+                showStatusMessage('Erro ao exportar dados. Tente novamente.', 'error');
+            }
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (!validateImportedData(importedData)) {
+                        throw new Error('Formato de arquivo inválido');
+                    }
+
+                    groups = importedData.groups || [];
+                    groupIdCounter = importedData.groupIdCounter || 0;
+                    taskIdCounter = importedData.taskIdCounter || 0;
+
+                    saveToLocalStorage();
+                    renderGroups();
+                    showStatusMessage(`Dados importados com sucesso! ${groups.length} grupos restaurados.`, 'success');
+
+                } catch (error) {
+                    console.error('Erro ao importar dados:', error);
+                    showStatusMessage('Erro ao importar dados. Verifique se o arquivo está correto.', 'error');
+                }
+            };
+
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function validateImportedData(data) {
+            if (!data || typeof data !== 'object') return false;
+            if (!Array.isArray(data.groups)) return false;
+
+            function validateGroup(group) {
+                if (!group.id && group.id !== 0) return false;
+                if (!group.name || typeof group.name !== 'string') return false;
+                if (!Array.isArray(group.tasks)) return false;
+                if (group.subgroups && !Array.isArray(group.subgroups)) return false;
+
+                for (const task of group.tasks) {
+                    if (!task.id && task.id !== 0) return false;
+                    if (!task.text || typeof task.text !== 'string') return false;
+                    if (typeof task.completed !== 'boolean') return false;
+                }
+
+                if (group.subgroups) {
+                    for (const subgroup of group.subgroups) {
+                        if (!validateGroup(subgroup)) return false;
+                    }
+                }
+
+                return true;
+            }
+
+            for (const group of data.groups) {
+                if (!validateGroup(group)) return false;
+            }
+
+            return true;
+        }
+
+        function showStatusMessage(message, type) {
+            const statusElement = document.getElementById('statusMessage');
+            statusElement.textContent = message;
+            statusElement.className = `status-message ${type} show`;
+
+            setTimeout(() => {
+                statusElement.classList.remove('show');
+            }, 4000);
+        }
+
+        // Navigation Functions
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const addSubgroupBtn = document.getElementById('addSubgroupBtn');
+            
+            if (navigationStack.length === 0) {
+                breadcrumb.innerHTML = '<span class="breadcrumb-item">Grupos Principais</span>';
+                addSubgroupBtn.style.display = 'none';
+            } else {
+                let breadcrumbHTML = '<span class="breadcrumb-item" onclick="navigateToRoot()">Grupos Principais</span>';
+                
+                for (let i = 0; i < navigationStack.length; i++) {
+                    const group = navigationStack[i];
+                    breadcrumbHTML += ' <span class="breadcrumb-separator">›</span> ';
+                    if (i === navigationStack.length - 1) {
+                        breadcrumbHTML += `<span class="breadcrumb-item">${group.name}</span>`;
+                    } else {
+                        breadcrumbHTML += `<span class="breadcrumb-item" onclick="navigateToGroup(${group.id})">${group.name}</span>`;
+                    }
+                }
+                
+                breadcrumb.innerHTML = breadcrumbHTML;
+                addSubgroupBtn.style.display = 'inline-block';
+            }
+        }
+
+        function navigateToRoot() {
+            navigationStack = [];
+            currentParentId = null;
+            renderGroups();
+        }
+
+        function navigateToGroup(groupId) {
+            const group = findGroupById(groupId);
+            if (!group) return;
+
+            const groupIndex = navigationStack.findIndex(g => g.id === groupId);
+            if (groupIndex !== -1) {
+                navigationStack = navigationStack.slice(0, groupIndex + 1);
+            }
+
+            currentParentId = groupId;
+            renderGroups();
+        }
+
+        function findGroupById(id, groupsList = groups) {
+            for (const group of groupsList) {
+                if (group.id === id) return group;
+                if (group.subgroups) {
+                    const found = findGroupById(id, group.subgroups);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+
+        function getCurrentGroupsList() {
+            if (currentParentId === null) {
+                return groups;
+            }
+            
+            const parentGroup = findGroupById(currentParentId);
+            return parentGroup ? (parentGroup.subgroups || []) : [];
+        }
 
         // Groups Management
         function addGroup() {
             const input = document.getElementById('newGroupName');
             const name = input.value.trim();
-            
             if (name === '') return;
-            
+
             const group = {
                 id: groupIdCounter++,
                 name: name,
-                tasks: []
+                tasks: [],
+                subgroups: []
             };
-            
-            groups.push(group);
+
+            // Corrigido: adicionar ao array correto
+            if (currentParentId === null) {
+                groups.push(group);
+            } else {
+                const parentGroup = findGroupById(currentParentId);
+                if (parentGroup) {
+                    if (!parentGroup.subgroups) parentGroup.subgroups = [];
+                    parentGroup.subgroups.push(group);
+                }
+            }
+
             input.value = '';
+            input.style.height = 'auto';
+            saveToLocalStorage();
             renderGroups();
+        }
+
+        function setAddMode(mode) {
+            addMode = mode;
+            renderAddToggle();
+            renderAddForm();
+        }
+
+        function renderAddToggle() {
+            const container = document.getElementById('addToggleContainer');
+            if (!container) return;
+            container.innerHTML = `
+                <div style="display: flex; gap: 8px; margin-bottom: 16px; align-items: center;">
+                    <button id="toggleTaskBtn" class="toggle-btn${addMode === 'task' ? ' active' : ''}" onclick="setAddMode('task')">Tarefa</button>
+                    <button id="toggleSubgroupBtn" class="toggle-btn${addMode === 'subgroup' ? ' active' : ''}" onclick="setAddMode('subgroup')">Subgrupo</button>
+                </div>
+            `;
+        }
+
+        function renderAddForm() {
+            const form = document.getElementById('addFormContainer');
+            if (!form) return;
+            if (addMode === 'task') {
+                form.innerHTML = `
+                    <div class="add-task">
+                        <textarea id="newTaskText" placeholder="Nova tarefa..." rows="1"></textarea>
+                        <button class="add-btn" onclick="addTask()">Adicionar</button>
+                    </div>
+                `;
+            } else {
+                form.innerHTML = `
+                    <div class="add-group">
+                        <textarea id="newSubgroupName" placeholder="Nome do novo subgrupo..." rows="1"></textarea>
+                        <button class="add-btn" onclick="addSubgroup()">Criar Subgrupo</button>
+                    </div>
+                `;
+            }
+            // Reaplica auto-resize e enter para submit
+            const textarea = form.querySelector('textarea');
+            if (textarea) {
+                textarea.addEventListener('input', function() { autoResizeTextarea(this); });
+                textarea.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        if (addMode === 'task') addTask();
+                        else addSubgroup();
+                    }
+                });
+            }
+        }
+
+        function addSubgroup() {
+            const input = document.getElementById('newSubgroupName');
+            const name = input.value.trim();
+            if (name === '') return;
+            const group = findGroupById(currentGroupId);
+            if (!group) return;
+            const subgroup = {
+                id: groupIdCounter++,
+                name: name,
+                tasks: [],
+                subgroups: []
+            };
+            if (!group.subgroups) group.subgroups = [];
+            group.subgroups.push(subgroup);
+            input.value = '';
+            input.style.height = 'auto';
+            saveToLocalStorage();
+            renderTasks();
+            updateProgress();
         }
 
         function deleteGroup(groupId, event) {
             event.stopPropagation();
-            groups = groups.filter(group => group.id !== groupId);
+            
+            function removeFromList(groupsList) {
+                for (let i = 0; i < groupsList.length; i++) {
+                    if (groupsList[i].id === groupId) {
+                        groupsList.splice(i, 1);
+                        return true;
+                    }
+                    if (groupsList[i].subgroups) {
+                        if (removeFromList(groupsList[i].subgroups)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            removeFromList(groups);
+            saveToLocalStorage();
             renderGroups();
         }
 
         function openGroup(groupId) {
             currentGroupId = groupId;
-            const group = groups.find(g => g.id === groupId);
+            const group = findGroupById(groupId);
             document.getElementById('currentGroupName').textContent = group.name;
             showTasksPage();
+            renderAddToggle();
+            renderAddForm();
             renderTasks();
             updateProgress();
         }
 
+        function enterSubgroup(groupId) {
+            const group = findGroupById(groupId);
+            if (!group) return;
+
+            navigationStack.push(group);
+            currentParentId = groupId;
+            renderGroups();
+        }
+
         function renderGroups() {
             const grid = document.getElementById('groupsGrid');
+            const currentGroups = getCurrentGroupsList();
             
-            if (groups.length === 0) {
+            updateBreadcrumb();
+            
+            if (currentGroups.length === 0) {
+                const isSubgroup = currentParentId !== null;
                 grid.innerHTML = `
                     <div class="empty-state">
-                        Nenhum grupo criado ainda.<br>
-                        Crie seu primeiro grupo para organizar suas tarefas.
+                        ${isSubgroup ? 'Nenhum subgrupo criado ainda.' : 'Nenhum grupo criado ainda.'}<br>
+                        ${isSubgroup ? 'Crie seu primeiro subgrupo para organizar melhor suas tarefas.' : 'Crie seu primeiro grupo para organizar suas tarefas.'}
                     </div>
                 `;
                 return;
             }
             
-            grid.innerHTML = groups.map(group => {
-                const totalTasks = group.tasks.length;
-                const completedTasks = group.tasks.filter(task => task.completed).length;
+            grid.innerHTML = currentGroups.map(group => {
+                const totalTasks = countAllTasks(group);
+                const completedTasks = countCompletedTasks(group);
+                const hasSubgroups = group.subgroups && group.subgroups.length > 0;
+                const isSubgroup = currentParentId !== null;
                 
                 return `
-                    <div class="group-card" onclick="openGroup(${group.id})">
+                    <div class="group-card ${isSubgroup ? 'subgroup' : ''}" onclick="openGroup(${group.id})">
                         <button class="delete-group" onclick="deleteGroup(${group.id}, event)" title="Excluir grupo">×</button>
-                        <div class="group-name">${group.name}</div>
+                        <div class="group-name">
+                            ${isSubgroup ? '<span class="subgroup-indicator">└</span>' : ''}
+                            ${group.name}
+                        </div>
                         <div class="group-stats">${completedTasks}/${totalTasks} tarefas concluídas</div>
+                        <div class="group-actions">
+                            ${hasSubgroups ? `<button onclick="event.stopPropagation(); enterSubgroup(${group.id})">📁 Ver Subgrupos (${group.subgroups.length})</button>` : ''}
+                        </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        function countAllTasks(group) {
+            let count = group.tasks.length;
+            if (group.subgroups) {
+                for (const subgroup of group.subgroups) {
+                    count += countAllTasks(subgroup);
+                }
+            }
+            return count;
+        }
+
+        function countCompletedTasks(group) {
+            let count = group.tasks.filter(task => task.completed).length;
+            if (group.subgroups) {
+                for (const subgroup of group.subgroups) {
+                    count += countCompletedTasks(subgroup);
+                }
+            }
+            return count;
+        }
+
+        // Page Navigation
+        function showGroupsPage() {
+            document.getElementById('groupsPage').classList.add('active');
+            document.getElementById('tasksPage').classList.remove('active');
+        }
+
+        function showTasksPage() {
+            document.getElementById('groupsPage').classList.remove('active');
+            document.getElementById('tasksPage').classList.add('active');
         }
 
         // Tasks Management
@@ -421,7 +1042,7 @@
             
             if (text === '') return;
             
-            const group = groups.find(g => g.id === currentGroupId);
+            const group = findGroupById(currentGroupId);
             if (!group) return;
             
             const task = {
@@ -432,94 +1053,100 @@
             
             group.tasks.push(task);
             input.value = '';
+            input.style.height = 'auto';
+            
+            saveToLocalStorage();
             renderTasks();
             updateProgress();
         }
 
         function toggleTask(taskId) {
-            const group = groups.find(g => g.id === currentGroupId);
+            const group = findGroupById(currentGroupId);
             if (!group) return;
             
             const task = group.tasks.find(t => t.id === taskId);
             if (task) {
                 task.completed = !task.completed;
+                saveToLocalStorage();
                 renderTasks();
                 updateProgress();
             }
         }
 
         function deleteTask(taskId) {
-            const group = groups.find(g => g.id === currentGroupId);
+            const group = findGroupById(currentGroupId);
             if (!group) return;
             
             group.tasks = group.tasks.filter(t => t.id !== taskId);
+            saveToLocalStorage();
             renderTasks();
             updateProgress();
         }
 
+        // Altere a função renderTasks para mostrar subgrupos se existirem
         function renderTasks() {
-            const tasksList = document.getElementById('tasksList');
-            const group = groups.find(g => g.id === currentGroupId);
-            
-            if (!group || group.tasks.length === 0) {
-                tasksList.innerHTML = `
-                    <div class="empty-state">
-                        Nenhuma tarefa neste grupo.<br>
-                        Adicione uma tarefa acima para começar.
-                    </div>
-                `;
+            const list = document.getElementById('tasksList');
+            const group = findGroupById(currentGroupId);
+            if (!group) {
+                list.innerHTML = `<div class="empty-state">Nenhuma tarefa encontrada.<br>Adicione uma nova tarefa acima.</div>`;
                 return;
             }
-            
-            tasksList.innerHTML = group.tasks.map(task => `
-                <li class="task-item ${task.completed ? 'completed' : ''}">
-                    <input type="checkbox" ${task.completed ? 'checked' : ''} 
-                           onchange="toggleTask(${task.id})">
-                    <span class="task-text">${task.text}</span>
-                    <button class="delete-task" onclick="deleteTask(${task.id})" title="Excluir">×</button>
-                </li>
-            `).join('');
+            let html = '';
+            // Subgrupos
+            if (group.subgroups && group.subgroups.length > 0) {
+                html += '<div style="margin-bottom:16px;"><b>Subgrupos:</b></div>';
+                html += group.subgroups.map(sub => `
+                    <li class="group-card subgroup" style="margin-bottom:8px;" onclick="openGroup(${sub.id})">
+                        <span class="subgroup-indicator">└</span> ${sub.name}
+                    </li>
+                `).join('');
+            }
+            // Tarefas
+            if (group.tasks && group.tasks.length > 0) {
+                html += group.tasks.map(task => `
+                    <li class="task-item ${task.completed ? 'completed' : ''}" onclick="toggleTask(${task.id})">
+                        <input type="checkbox" id="task-${task.id}" ${task.completed ? 'checked' : ''}>
+                        <label for="task-${task.id}" class="task-text">${task.text}</label>
+                        <button class="delete-task" onclick="deleteTask(${task.id}, event)">🗑️</button>
+                    </li>
+                `).join('');
+            }
+            if (!html) {
+                html = `<div class="empty-state">Nenhuma tarefa ou subgrupo neste grupo.<br>Adicione acima para começar.</div>`;
+            }
+            list.innerHTML = html;
         }
 
         function updateProgress() {
-            const group = groups.find(g => g.id === currentGroupId);
+            const group = findGroupById(currentGroupId);
             if (!group) return;
-            
-            const total = group.tasks.length;
-            const completed = group.tasks.filter(task => task.completed).length;
-            const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
-            
-            document.getElementById('progressFill').style.width = percentage + '%';
-            document.getElementById('progressText').textContent = `${percentage}% concluído (${completed}/${total})`;
-        }
-
-        // Navigation
-        function showGroupsPage() {
-            document.getElementById('groupsPage').classList.add('active');
-            document.getElementById('tasksPage').classList.remove('active');
-            renderGroups();
-        }
-
-        function showTasksPage() {
-            document.getElementById('groupsPage').classList.remove('active');
-            document.getElementById('tasksPage').classList.add('active');
-        }
-
-        // Event Listeners
-        document.getElementById('newGroupName').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addGroup();
+            // Corrigido: contar tarefas do grupo e de subgrupos
+            function countAllTasksFlat(g) {
+                let count = g.tasks.length;
+                if (g.subgroups) {
+                    for (const sub of g.subgroups) {
+                        count += countAllTasksFlat(sub);
+                    }
+                }
+                return count;
             }
-        });
-
-        document.getElementById('newTaskText').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addTask();
+            function countCompletedTasksFlat(g) {
+                let count = g.tasks.filter(t => t.completed).length;
+                if (g.subgroups) {
+                    for (const sub of g.subgroups) {
+                        count += countCompletedTasksFlat(sub);
+                    }
+                }
+                return count;
             }
-        });
-
-        // Initialize
-        renderGroups();
+            const totalTasks = countAllTasksFlat(group);
+            const completedTasks = countCompletedTasksFlat(group);
+            const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `${completedTasks} de ${totalTasks} concluídas (${Math.round(progress)}%)`;
+        }
     </script>
 </body>
 </html>
